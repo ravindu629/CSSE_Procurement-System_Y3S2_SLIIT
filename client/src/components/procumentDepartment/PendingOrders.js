@@ -114,7 +114,7 @@ function PendingOrders() {
                             navigate(`/updateOrderStatus/${order._id}`);
                           }}
                         >
-                          <b>Check Budget Allocation</b>
+                          <b>Change Order Status</b>
                         </button>
                       </td>
                     </tr>

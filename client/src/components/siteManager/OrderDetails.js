@@ -85,7 +85,7 @@ function OrderDetails() {
       .post("http://localhost:5000/api/orderStatus", order_status)
       .then(() => {
         alert("Request send to procument department");
-        navigate("/addOrder");
+        navigate(`/orderDetails/${staffId}/${orderNo}/${site}`);
       })
       .catch((err) => {
         alert(err);

@@ -1,15 +1,47 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useParams } from "react-router";
 import axios from "axios";
 
-function AddOrder() {
+function AddItems() {
+  const { staffId } = useParams();
+  const { orderNo } = useParams();
+  const { site } = useParams();
+
   const [order, setOrder] = useState({
     staffId: "",
     orderNo: "",
-    site: "Kandy",
+    site: "",
+    item: "",
+    itemPrice: "",
+    quantity: "",
   });
 
   let navigate = useNavigate();
+
+  useEffect(() => {
+    function getOrders() {
+      axios
+        .get("http://localhost:5000/api/orders")
+        .then((res) => {
+          const allOrders = res.data;
+
+          const siteOrders = allOrders.filter((order) => {
+            return (
+              order.staffId === staffId &&
+              order.orderNo === orderNo &&
+              order.site === site
+            );
+          });
+          console.log(siteOrders[0]);
+          setOrder(siteOrders[0]);
+        })
+        .catch((err) => {
+          alert(err.message);
+        });
+    }
+    getOrders();
+  }, []);
 
   function sendData(e) {
     e.preventDefault();
@@ -17,12 +49,15 @@ function AddOrder() {
     axios
       .post("http://localhost:5000/api/orders", order)
       .then(() => {
-        alert("Order added");
+        alert("Item added");
         navigate(`/addItems/${order.staffId}/${order.orderNo}/${order.site}`);
         setOrder({
-          staffId: "",
-          orderNo: "",
-          site: "Kandy",
+          staffId: order.staffId,
+          orderNo: order.orderNo,
+          site: order.site,
+          item: "",
+          itemPrice: "",
+          quantity: "",
         });
       })
       .catch((err) => {
@@ -63,7 +98,10 @@ function AddOrder() {
           Each Site Order Details
         </button>
       </div>
-      <h4 className="registerTitle">Add New Order Details</h4>
+      <h4 className="registerTitle">
+        Add Items for Order No :{" "}
+        <h2 style={{ color: "red", fontWeight: "bold" }}>{order.orderNo}</h2>
+      </h4>
       <form onSubmit={sendData} className="registerForm">
         <div className="form-group">
           <label for="exampleInputEmail1">Staff ID</label>
@@ -71,11 +109,10 @@ function AddOrder() {
             type="text"
             className="form-control"
             id="exampleInputEmail1"
-            placeholder="Enter Site Manager Staff ID"
             name="staffId"
             value={order.staffId}
             onChange={handleChange}
-            required
+            disabled
           />
         </div>
         <div className="form-group">
@@ -84,11 +121,10 @@ function AddOrder() {
             type="text"
             className="form-control"
             id="exampleInputEmail1"
-            placeholder="Enter Order Number"
             name="orderNo"
             value={order.orderNo}
             onChange={handleChange}
-            required
+            disabled
           />
         </div>
 
@@ -103,6 +139,7 @@ function AddOrder() {
               value={order.site}
               onChange={handleChange}
               name="site"
+              disabled
             >
               <option selected={order.site === "Kandy"} value="Kandy">
                 Kandy
@@ -122,13 +159,52 @@ function AddOrder() {
             </select>
           </div>
         </div>
+        <div className="form-group">
+          <label for="exampleInputEmail1">Item</label>
+          <input
+            type="text"
+            className="form-control"
+            id="exampleInputEmail1"
+            placeholder="Enter Item Name"
+            name="item"
+            value={order.item}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label for="exampleInputEmail1">Item Price (Rs)</label>
+          <input
+            type="number"
+            className="form-control"
+            id="exampleInputEmail1"
+            placeholder="Enter Item Price"
+            name="itemPrice"
+            value={order.itemPrice}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label for="exampleInputEmail1">Quantity</label>
+          <input
+            type="number"
+            className="form-control"
+            id="exampleInputEmail1"
+            placeholder="Enter Quantity"
+            name="quantity"
+            value={order.quantity}
+            onChange={handleChange}
+            required
+          />
+        </div>
 
         <button type="submit" className="btn btn-dark btn-lg">
-          Next
+          Add
         </button>
       </form>
     </div>
   );
 }
 
-export default AddOrder;
+export default AddItems;

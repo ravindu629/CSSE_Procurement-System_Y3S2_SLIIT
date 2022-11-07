@@ -27,6 +27,7 @@ import SupplierRegister from "./components/supplier/SupplierRegister";
 import Suppliers from "./components/supplier/Suppliers";
 import OrderStatusCheck from "./components/siteManager/OrderStatusCheck";
 import AddDelivery from "./components/siteManager/AddDelivery";
+import AddItems from "./components/siteManager/AddItems";
 
 function App() {
   return (
@@ -48,6 +49,10 @@ function App() {
           <Route
             path="/orderDetails/:staffId/:orderNo/:site"
             element={<OrderDetails />}
+          />
+          <Route
+            path="/addItems/:staffId/:orderNo/:site"
+            element={<AddItems />}
           />
           <Route
             path="/orderStatusCheck/:staffId/:orderNo/:site"
