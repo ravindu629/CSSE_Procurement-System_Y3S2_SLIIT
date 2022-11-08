@@ -29,6 +29,8 @@ function OrderDetails() {
             );
           });
 
+          siteOrders.shift();
+
           setOrders(siteOrders);
         })
         .catch((err) => {
@@ -121,15 +123,15 @@ function OrderDetails() {
             <tbody>
               <tr>
                 <td>Site Manager Staff ID</td>
-                <td>{staffId}</td>
+                <td style={{ color: "IndianRed" }}>{staffId}</td>
               </tr>
               <tr>
                 <td>Order Number</td>
-                <td>{orderNo}</td>
+                <td style={{ color: "IndianRed" }}>{orderNo}</td>
               </tr>
               <tr>
                 <td>Site</td>
-                <td>{site}</td>
+                <td style={{ color: "IndianRed" }}>{site}</td>
               </tr>
               <tr>
                 <td>
@@ -150,7 +152,17 @@ function OrderDetails() {
                   </button>
                 </td>
                 <td>
-                  <h2>Rs.{total}.00</h2>
+                  <h2>
+                    {total > 100000 ? (
+                      <b style={{ fontWeight: "600", color: "red" }}>
+                        Rs.{total}.00
+                      </b>
+                    ) : (
+                      <b style={{ fontWeight: "600", color: "green" }}>
+                        Rs.{total}.00
+                      </b>
+                    )}
+                  </h2>
                 </td>
               </tr>
             </tbody>

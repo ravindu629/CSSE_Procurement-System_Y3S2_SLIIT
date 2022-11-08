@@ -99,68 +99,27 @@ function AddItems() {
         </button>
       </div>
       <h4 className="registerTitle">
-        Add Items for Order No :{" "}
-        <h2 style={{ color: "red", fontWeight: "bold" }}>{order.orderNo}</h2>
+        Add Items for Order No : &nbsp;
+        <b style={{ color: "red", fontSize: "130%", fontWeight: "700" }}>
+          {order.orderNo}
+        </b>
       </h4>
       <form onSubmit={sendData} className="registerForm">
+        <h3>
+          Site: &nbsp;
+          <b style={{ color: "blue", fontSize: "105%", fontWeight: "600" }}>
+            {order.site}
+          </b>
+        </h3>
+        <h3>
+          Site Manager Staff ID: &nbsp;
+          <b style={{ color: "blue", fontSize: "105%", fontWeight: "600" }}>
+            {order.staffId}
+          </b>
+        </h3>
+        <br />
         <div className="form-group">
-          <label for="exampleInputEmail1">Staff ID</label>
-          <input
-            type="text"
-            className="form-control"
-            id="exampleInputEmail1"
-            name="staffId"
-            value={order.staffId}
-            onChange={handleChange}
-            disabled
-          />
-        </div>
-        <div className="form-group">
-          <label for="exampleInputEmail1">Order Number</label>
-          <input
-            type="text"
-            className="form-control"
-            id="exampleInputEmail1"
-            name="orderNo"
-            value={order.orderNo}
-            onChange={handleChange}
-            disabled
-          />
-        </div>
-
-        <div class="form-group row">
-          <label for="fac" className="col-sm-2 col-form-label">
-            Site
-          </label>
-          <div className="col-sm-10">
-            <select
-              id="fac"
-              class="form-control"
-              value={order.site}
-              onChange={handleChange}
-              name="site"
-              disabled
-            >
-              <option selected={order.site === "Kandy"} value="Kandy">
-                Kandy
-              </option>
-              <option selected={order.site === "Matara"} value="Matara">
-                Matara
-              </option>
-              <option selected={order.site === "Colombo"} value="Colombo">
-                Colombo
-              </option>
-              <option selected={order.site === "Jaffna"} value="Jaffna">
-                Jaffna
-              </option>
-              <option selected={order.site === "Kurunegala"} value="Kurunegala">
-                Kurunegala
-              </option>
-            </select>
-          </div>
-        </div>
-        <div className="form-group">
-          <label for="exampleInputEmail1">Item</label>
+          <label for="exampleInputEmail1">Item Name</label>
           <input
             type="text"
             className="form-control"
